@@ -31,23 +31,8 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-[75vh] flex items-center overflow-hidden py-8">
-      {/* Dynamic Gradient Background */}
-      <motion.div
-        className="absolute inset-0 -z-10"
-        animate={{
-          background: [
-            'linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-            'linear-gradient(45deg, #f093fb 0%, #f5576c 50%, #4facfe 100%)',
-            'linear-gradient(45deg, #4facfe 0%, #00f2fe 50%, #667eea 100%)',
-            'linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%)'
-          ],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'linear'
-        }}
-      />
+      {/* Simple Purple Background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900" />
 
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -104,7 +89,7 @@ const Hero = () => {
               >
                 Buy & Sell
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-violet-300 to-indigo-300">
                   Everything
                 </span>{' '}
                 Near You
@@ -123,7 +108,7 @@ const Hero = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <motion.button 
-                className="group bg-gradient-to-r from-pink-500 to-violet-500 hover:from-pink-600 hover:to-violet-600 text-white font-semibold px-6 py-3 rounded-xl shadow-2xl flex items-center justify-center gap-2 w-fit"
+                className="group bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold px-6 py-3 rounded-xl shadow-2xl flex items-center justify-center gap-2 w-fit"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ y: 20, opacity: 0 }}
@@ -205,7 +190,7 @@ const Hero = () => {
                     <input
                       type="text"
                       placeholder="Search anything..."
-                      className="w-full pl-9 pr-3 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg text-white placeholder-white/70 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
+                      className="w-full pl-9 pr-3 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg text-white placeholder-white/70 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -219,14 +204,14 @@ const Hero = () => {
                     <input
                       type="text"
                       placeholder="Location"
-                      className="w-full pl-9 pr-3 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg text-white placeholder-white/70 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
+                      className="w-full pl-9 pr-3 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg text-white placeholder-white/70 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                     />
                   </motion.div>
 
                   <motion.button 
-                    className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white font-semibold py-2 rounded-lg shadow-lg flex items-center justify-center gap-2 text-sm"
+                    className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold py-2 rounded-lg shadow-lg flex items-center justify-center gap-2 text-sm"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                   >
