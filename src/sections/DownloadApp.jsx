@@ -109,37 +109,36 @@ const DownloadApp = () => {
   return (
     <section 
       ref={ref}
-      className="relative py-24 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-purple-100 dark:from-gray-900 dark:via-slate-800 dark:to-purple-900"
+      className="relative py-24 overflow-hidden min-h-screen"
     >
-      {/* Animated Background Elements */}
+      {/* Matching Purple Background from Featured Listings */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900" />
+
+      {/* Animated Background Elements - Same as Featured Listings */}
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-r from-blue-300 to-purple-300 rounded-full opacity-20 blur-3xl"
-          animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360]
-          }}
-          transition={{ 
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        />
-        <motion.div
-          className="absolute -bottom-40 -right-40 w-80 h-80 bg-gradient-to-r from-pink-300 to-orange-300 rounded-full opacity-20 blur-3xl"
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 180, 0]
-          }}
-          transition={{ 
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        />
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-32 h-32 bg-white/5 rounded-full blur-2xl"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              x: [0, 60, -40, 0],
+              y: [0, -60, 40, 0],
+              scale: [1, 1.4, 0.7, 1],
+            }}
+            transition={{
+              duration: 12 + Math.random() * 6,
+              repeat: Infinity,
+              delay: i * 0.7,
+            }}
+          />
+        ))}
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4">
+      <div className="relative z-10 max-w-7xl mx-auto px-4">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -160,18 +159,18 @@ const DownloadApp = () => {
               </motion.div>
               
               <motion.h2 
-                className="text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight"
+                className="text-5xl lg:text-6xl font-bold text-white leading-tight"
                 variants={itemVariants}
               >
                 Download the{" "}
-                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                   OLXpress
                 </span>{" "}
                 App
               </motion.h2>
               
               <motion.p 
-                className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed"
+                className="text-xl text-white/80 leading-relaxed"
                 variants={itemVariants}
               >
                 Experience the fastest way to buy and sell. Join millions of users who trust OLXpress for their marketplace needs.
@@ -193,8 +192,8 @@ const DownloadApp = () => {
                   <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full mb-2 mx-auto">
                     <stat.icon className="w-6 h-6" />
                   </div>
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</div>
+                  <div className="text-2xl font-bold text-white">{stat.value}</div>
+                  <div className="text-sm text-white/70">{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>
@@ -209,14 +208,14 @@ const DownloadApp = () => {
                 return (
                   <motion.div
                     key={index}
-                    className={`p-4 rounded-2xl border border-gray-200 dark:border-gray-700 cursor-pointer transition-all duration-300 ${
+                    className={`p-4 rounded-2xl border border-white/20 cursor-pointer transition-all duration-300 ${
                       activeFeature === index
-                        ? 'bg-white dark:bg-gray-800 shadow-lg scale-105'
-                        : 'bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800'
+                        ? 'bg-white/20 backdrop-blur-md shadow-lg scale-105'
+                        : 'bg-white/10 backdrop-blur-md hover:bg-white/20'
                     }`}
                     whileHover={{ 
                       scale: 1.02,
-                      boxShadow: "0 10px 30px -10px rgba(0,0,0,0.2)"
+                      boxShadow: "0 10px 30px -10px rgba(255,255,255,0.2)"
                     }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveFeature(index)}
@@ -231,10 +230,10 @@ const DownloadApp = () => {
                         <IconComponent className="w-5 h-5" />
                       </motion.div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
+                        <h4 className="font-semibold text-white text-sm">
                           {feature.title}
                         </h4>
-                        <p className="text-gray-600 dark:text-gray-400 text-xs mt-1">
+                        <p className="text-white/70 text-xs mt-1">
                           {feature.description}
                         </p>
                       </div>
@@ -251,7 +250,7 @@ const DownloadApp = () => {
             >
               <motion.a
                 href="#"
-                className="group relative overflow-hidden bg-black text-white px-8 py-4 rounded-2xl flex items-center justify-center gap-3 font-medium text-lg transition-all duration-300"
+                className="group relative overflow-hidden bg-white text-gray-900 px-8 py-4 rounded-2xl flex items-center justify-center gap-3 font-medium text-lg transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onHoverStart={() => setHoveredButton('google')}
@@ -261,8 +260,8 @@ const DownloadApp = () => {
                   className="absolute inset-0 bg-gradient-to-r from-green-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   initial={false}
                 />
-                <FaGooglePlay className="w-6 h-6 relative z-10" />
-                <span className="relative z-10">Google Play</span>
+                <FaGooglePlay className="w-6 h-6 relative z-10 group-hover:text-white" />
+                <span className="relative z-10 group-hover:text-white">Google Play</span>
                 <motion.div
                   className="absolute right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   animate={hoveredButton === 'google' ? { x: 0 } : { x: 10 }}
@@ -273,7 +272,7 @@ const DownloadApp = () => {
 
               <motion.a
                 href="#"
-                className="group relative overflow-hidden bg-black text-white px-8 py-4 rounded-2xl flex items-center justify-center gap-3 font-medium text-lg transition-all duration-300"
+                className="group relative overflow-hidden bg-white text-gray-900 px-8 py-4 rounded-2xl flex items-center justify-center gap-3 font-medium text-lg transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onHoverStart={() => setHoveredButton('apple')}
@@ -283,8 +282,8 @@ const DownloadApp = () => {
                   className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   initial={false}
                 />
-                <FaAppStoreIos className="w-6 h-6 relative z-10" />
-                <span className="relative z-10">App Store</span>
+                <FaAppStoreIos className="w-6 h-6 relative z-10 group-hover:text-white" />
+                <span className="relative z-10 group-hover:text-white">App Store</span>
                 <motion.div
                   className="absolute right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   animate={hoveredButton === 'apple' ? { x: 0 } : { x: 10 }}
@@ -301,7 +300,7 @@ const DownloadApp = () => {
             >
               <motion.button
                 onClick={() => setShowQR(!showQR)}
-                className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
+                className="flex items-center gap-2 text-blue-400 hover:text-blue-300 font-medium"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -313,13 +312,13 @@ const DownloadApp = () => {
                 initial={false}
                 animate={{ opacity: showQR ? 1 : 0, scale: showQR ? 1 : 0.8 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700"
+                className="bg-white/10 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/20"
                 style={{ display: showQR ? 'block' : 'none' }}
               >
                 <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
                   <FaQrcode className="w-12 h-12 text-white" />
                 </div>
-                <p className="text-xs mt-2 text-gray-500 dark:text-gray-400 text-center">Scan to download</p>
+                <p className="text-xs mt-2 text-white/70 text-center">Scan to download</p>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -444,7 +443,7 @@ const DownloadApp = () => {
 
               {/* Background Decoration */}
               <motion.div
-                className="absolute -z-10 w-96 h-96 bg-gradient-to-r from-blue-200 to-purple-200 rounded-full blur-3xl opacity-30"
+                className="absolute -z-10 w-96 h-96 bg-gradient-to-r from-blue-200/20 to-purple-200/20 rounded-full blur-3xl opacity-30"
                 animate={{
                   scale: [1, 1.1, 1],
                   rotate: [0, 90, 180, 270, 360]
