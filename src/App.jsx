@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar";
 import Hero from './sections/Hero';
 import FeaturedListings from './sections/FeaturedListings';
 import RecentAds from "./sections/RecentAds";
+import WhyChooseUs from './sections/WhyChooseUs';
+
 function App() {
   return (
     <>
@@ -14,6 +16,7 @@ function App() {
       <Hero />
       <FeaturedListings />
       <RecentAds />
+      <WhyChooseUs />
     </>
   );
 }
