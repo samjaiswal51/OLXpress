@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMapPin, FiClock, FiHeart } from 'react-icons/fi';
+import { FiMapPin, FiClock, FiHeart, FiSearch } from 'react-icons/fi';
 
 // Mock ads data with more realistic content
 const ads = [
@@ -95,9 +95,9 @@ const RecentAds = () => {
   const [saved, setSaved] = useState([]);
   const [sortBy, setSortBy] = useState('newest');
   const [location, setLocation] = useState('All India');
-  const [viewMode, setViewMode] = useState('grid');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [currentImageIndex, setCurrentImageIndex] = useState({});
+  const [visibleCount, setVisibleCount] = useState(6);
 
   const toggleSave = (id) => {
     const updated = saved.includes(id)
@@ -128,6 +128,8 @@ const RecentAds = () => {
     if (sortBy === 'rating') return b.seller.rating - a.seller.rating;
     return b.timePosted - a.timePosted;
   });
+
+  const adsToShow = sortedAds.slice(0, visibleCount);
 
   const nextImage = (adId) => {
     const ad = ads.find(a => a.id === adId);
@@ -179,132 +181,72 @@ const RecentAds = () => {
   const categories = ['All', 'Electronics', 'Vehicles', 'Fashion', 'Home'];
 
   return (
-    <section className="py-20 px-4 md:px-8 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
+    <section className="relative py-16 px-4 md:px-10 min-h-screen overflow-hidden">
+      {/* Simple Purple Background - Matching FeaturedListings */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900" />
+
+      {/* Animated Background Elements - Matching FeaturedListings */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-32 h-32 bg-white/5 rounded-full blur-2xl"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              x: [0, 60, -40, 0],
+              y: [0, -60, 40, 0],
+              scale: [1, 1.4, 0.7, 1],
+            }}
+            transition={{
+              duration: 12 + Math.random() * 6,
+              repeat: Infinity,
+              delay: i * 0.7,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Header Section - Matching FeaturedListings */}
         <motion.div 
           className="text-center mb-12"
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-            🌟 Fresh Listings
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Recent Ads
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover amazing deals from verified sellers across India
+          <p className="text-white/80 text-lg max-w-2xl mx-auto">
+            Fresh listings from verified sellers across India
           </p>
         </motion.div>
 
-        {/* Enhanced Filter Bar */}
-        <motion.div 
-          className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-8 shadow-xl border border-white/20"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <div className="flex flex-wrap gap-4 items-center justify-between">
-            {/* Category Filters */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <motion.button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    selectedCategory === category
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {category}
-                </motion.button>
-              ))}
-            </div>
-
-            {/* Controls */}
-            <div className="flex gap-3 items-center">
-              {/* View Mode Toggle */}
-              <div className="flex bg-gray-100 rounded-lg p-1">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`px-3 py-2 rounded text-sm transition-all ${
-                    viewMode === 'grid' ? 'bg-white shadow text-blue-600' : 'text-gray-600'
-                  }`}
-                >
-                  Grid
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`px-3 py-2 rounded text-sm transition-all ${
-                    viewMode === 'list' ? 'bg-white shadow text-blue-600' : 'text-gray-600'
-                  }`}
-                >
-                  List
-                </button>
-              </div>
-
-              {/* Location Filter */}
-              <select
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className="border-2 border-gray-200 px-4 py-2 rounded-xl focus:border-blue-500 transition-colors"
-              >
-                <option>All India</option>
-                <option>Delhi</option>
-                <option>Mumbai</option>
-                <option>Bangalore</option>
-                <option>Pune</option>
-              </select>
-
-              {/* Sort Options */}
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="border-2 border-gray-200 px-4 py-2 rounded-xl focus:border-blue-500 transition-colors"
-              >
-                <option value="newest">Latest First</option>
-                <option value="priceLow">Price: Low to High</option>
-                <option value="priceHigh">Price: High to Low</option>
-                <option value="rating">Top Rated Sellers</option>
-              </select>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Ads Grid */}
-        <motion.div 
-          className={`${
-            viewMode === 'grid' 
-              ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6' 
-              : 'flex flex-col gap-6'
-          }`}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <AnimatePresence>
-            {sortedAds.map((ad) => (
+        {/* Ads Grid - Cards without Glassmorphism, matching FeaturedListings */}
+        <AnimatePresence>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {adsToShow.map((ad, index) => (
               <motion.div
                 key={ad.id}
                 variants={cardVariants}
-                className={`group relative bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] transition-all duration-500 ${
-                  viewMode === 'list' ? 'flex flex-row' : ''
-                }`}
+                className="group relative bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] transition-all duration-500"
                 whileHover={{ y: -15, scale: 1.03 }}
                 layout
               >
                 {/* Image Container */}
-                <div className={`relative overflow-hidden ${
-                  viewMode === 'list' ? 'w-64 flex-shrink-0' : 'h-48'
-                }`}>
+                <div className="relative overflow-hidden">
                   <motion.img
                     src={ad.imageUrls[currentImageIndex[ad.id] || 0]}
                     alt={ad.title}
-                    className={`w-full object-cover transition-transform duration-700 group-hover:scale-115 ${
-                      viewMode === 'list' ? 'h-full' : 'h-48'
-                    }`}
+                    className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-115"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
@@ -331,18 +273,18 @@ const RecentAds = () => {
                     </div>
                   )}
 
-                  {/* Category Badge */}
+                  {/* Category Badge - Matching FeaturedListings */}
                   <motion.div 
                     className="absolute top-3 left-3"
                     whileHover={{ scale: 1.1 }}
                   >
-                    <span className="px-3 py-1 bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-bold rounded-full shadow-lg">
+                    <span className="px-3 py-1 bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-xs font-bold rounded-full shadow-lg">
                       {ad.category}
                     </span>
                   </motion.div>
 
-                  {/* Verification and Status Badges */}
-                  <div className="absolute top-3 right-3 flex flex-col gap-1">
+                  {/* Additional Badges */}
+                  <div className="absolute top-3 right-14 flex flex-col gap-1">
                     {Date.now() - ad.timePosted.getTime() < 60 * 60 * 1000 && (
                       <motion.span 
                         className="bg-gradient-to-r from-green-400 to-green-600 text-white px-2 py-1 text-xs rounded-full font-semibold shadow-lg"
@@ -355,12 +297,12 @@ const RecentAds = () => {
                     )}
                     {ad.isVerified && (
                       <motion.span 
-                        className="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-2 py-1 text-xs rounded-full font-semibold shadow-lg"
+                        className="bg-gradient-to-r from-purple-400 to-purple-600 text-white px-2 py-1 text-xs rounded-full font-semibold shadow-lg"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: 0.4 }}
                       >
-                        Verified
+                        ✓
                       </motion.span>
                     )}
                     {ad.isUrgent && (
@@ -381,15 +323,15 @@ const RecentAds = () => {
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-5 flex-1">
+                {/* Content - Matching FeaturedListings structure */}
+                <div className="p-5">
                   <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-purple-600 transition-colors duration-300">
                     {ad.title}
                   </h3>
                   
-                  <div className="mb-2">
+                  <div className="mb-4">
                     <motion.span 
-                      className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600"
+                      className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-600"
                       whileHover={{ scale: 1.05 }}
                     >
                       ₹{ad.price.toLocaleString()}
@@ -400,36 +342,21 @@ const RecentAds = () => {
                       </span>
                     )}
                   </div>
-
-                  {/* Seller Info */}
-                  <div className="mb-3 p-2 bg-gray-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-gray-800 text-sm">{ad.seller.name}</p>
-                        <div className="flex items-center gap-1">
-                          <span className="text-yellow-400">★</span>
-                          <span className="text-xs text-gray-600">
-                            {ad.seller.rating} ({ad.seller.totalReviews})
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   
-                  <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
+                  <div className="flex items-center justify-between text-sm text-gray-600">
                     <div className="flex items-center gap-1">
-                      <FiMapPin className="text-pink-400" />
+                      <FiMapPin className="text-purple-400" />
                       <span>{ad.location}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <FiClock className="text-purple-400" />
+                      <FiClock className="text-indigo-400" />
                       <span>{timeAgo(ad.timePosted)}</span>
                     </div>
                   </div>
 
-                  {/* Action Button */}
+                  {/* Action Button - Matching FeaturedListings */}
                   <motion.button
-                    className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition-all duration-300"
+                    className="mt-4 w-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition-all duration-300"
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -437,7 +364,7 @@ const RecentAds = () => {
                   </motion.button>
                 </div>
 
-                {/* Save Heart Icon */}
+                {/* Save Heart Icon - Matching FeaturedListings */}
                 <motion.button
                   onClick={() => toggleSave(ad.id)}
                   className="absolute top-3 right-3 bg-white/90 p-2.5 rounded-full shadow-xl hover:bg-white transition-all duration-300"
@@ -458,31 +385,40 @@ const RecentAds = () => {
                   </motion.div>
                 </motion.button>
 
-                {/* Hover Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-pink-500/10 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none rounded-2xl"></div>
+                {/* Hover Glow Effect - Matching FeaturedListings */}
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-500/10 via-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none rounded-2xl"></div>
               </motion.div>
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </motion.div>
+        </AnimatePresence>
 
-        {/* Load More Button */}
-        <motion.div 
-          className="text-center mt-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <motion.button
-            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transition-all"
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
-            }}
-            whileTap={{ scale: 0.95 }}
+        {/* Load More Button - Matching FeaturedListings */}
+        {visibleCount < sortedAds.length && (
+          <motion.div 
+            className="mt-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
-            Load More Amazing Deals 🚀
-          </motion.button>
-        </motion.div>
+            <motion.button
+              onClick={() => setVisibleCount((prev) => prev + 6)}
+              className="relative px-8 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-semibold rounded-full shadow-2xl border border-white/30 transform transition-all duration-300 overflow-hidden group backdrop-blur-md"
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Load More Ads
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                >
+                  <FiSearch className="text-lg" />
+                </motion.div>
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+            </motion.button>
+          </motion.div>
+        )}
       </div>
 
       <style jsx>{`
