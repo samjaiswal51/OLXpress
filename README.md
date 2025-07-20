@@ -11,7 +11,7 @@
 ## 🌍 Live Demo
 
 🧑‍💻 Check it Out:  
-🔗
+🔗 https://olxpress.vercel.app/
 
 ---
 
@@ -21,18 +21,25 @@
 
 ---
 
-## 🚀 Features
+## 📚 Project Sections Overview
 
-- 🧭 **Hero Section** with animated intro and CTA
-- 🛍️ **Recent Ads** & **Featured Listings** with:
-  - Hover effects, card tilt
-  - Verified, New, Urgent badges
-  - Sort/filter (category, price, location)
-- 📱 **Mobile-First** layout with sticky filters & swipe
-- 🖼️ **Image Carousel** in listings using Swiper.js
-- 💬 “Chat Now” button (future-ready)
-- ✨ **Framer Motion Animations**: scroll reveal, hover pop, shimmer
-- 🧲 **Smart Controls**: Sort, Search, Refresh, Saved items
+- 🎯 **Hero Section**  
+  Engaging top banner with CTA and animated intro using Framer Motion.
+
+- 🛍️ **Recent Ads**  
+  Displays latest ads with interactive cards, badges, and quick view modal.
+
+- 🌟 **Featured Listings**  
+  Highlighted ads with filters (category, price, location), sort options, and Swiper image carousel.
+
+- 🤝 **Why Choose Us**  
+  Key highlights of the platform using icons and animation to build user trust.
+
+- 📱 **Download App**  
+  Promotional section for mobile app with responsive layout and download badges.
+
+- 🔗 **Footer**  
+  Contains navigation, contact info, social links, and brand logo with smooth hover effects.
 
 ---
 
