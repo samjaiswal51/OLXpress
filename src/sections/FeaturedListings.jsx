@@ -92,25 +92,10 @@ const FeaturedListings = () => {
 
   return (
     <section className="relative py-16 px-4 md:px-10 min-h-screen overflow-hidden">
-      {/* Dynamic Gradient Background - Matching Hero */}
-      <motion.div
-        className="absolute inset-0 -z-10"
-        animate={{
-          background: [
-            'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-            'linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%)',
-            'linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #667eea 100%)',
-            'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)'
-          ],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: 'linear'
-        }}
-      />
+      {/* Simple Purple Background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900" />
 
-      {/* Animated Background Elements - Matching Hero */}
+      {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(8)].map((_, i) => (
           <motion.div
@@ -150,8 +135,6 @@ const FeaturedListings = () => {
           </p>
         </motion.div>
 
-        
-
         {/* Listings Grid - Cards without Glassmorphism */}
         <AnimatePresence>
           <motion.div
@@ -183,7 +166,7 @@ const FeaturedListings = () => {
                     className="absolute top-3 left-3"
                     whileHover={{ scale: 1.1 }}
                   >
-                    <span className="px-3 py-1 bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-bold rounded-full shadow-lg">
+                    <span className="px-3 py-1 bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-xs font-bold rounded-full shadow-lg">
                       {item.category}
                     </span>
                   </motion.div>
@@ -197,7 +180,7 @@ const FeaturedListings = () => {
                   
                   <div className="mb-4">
                     <motion.span 
-                      className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600"
+                      className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-600"
                       whileHover={{ scale: 1.05 }}
                     >
                       ₹{item.price.toLocaleString()}
@@ -206,18 +189,18 @@ const FeaturedListings = () => {
                   
                   <div className="flex items-center justify-between text-sm text-gray-600">
                     <div className="flex items-center gap-1">
-                      <FiMapPin className="text-pink-400" />
+                      <FiMapPin className="text-purple-400" />
                       <span>{item.location}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <FiClock className="text-purple-400" />
+                      <FiClock className="text-indigo-400" />
                       <span>{item.time}</span>
                     </div>
                   </div>
 
                   {/* Action Button */}
                   <motion.button
-                    className="mt-4 w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition-all duration-300"
+                    className="mt-4 w-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition-all duration-300"
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -247,7 +230,7 @@ const FeaturedListings = () => {
                 </motion.button>
 
                 {/* Hover Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-pink-500/10 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none rounded-2xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-500/10 via-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none rounded-2xl"></div>
               </motion.div>
             ))}
           </motion.div>
@@ -263,7 +246,7 @@ const FeaturedListings = () => {
           >
             <motion.button
               onClick={() => setVisibleCount((prev) => prev + 6)}
-              className="relative px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold rounded-full shadow-2xl border border-white/30 transform transition-all duration-300 overflow-hidden group backdrop-blur-md"
+              className="relative px-8 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-semibold rounded-full shadow-2xl border border-white/30 transform transition-all duration-300 overflow-hidden group backdrop-blur-md"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -276,7 +259,7 @@ const FeaturedListings = () => {
                   <FiSearch className="text-lg" />
                 </motion.div>
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             </motion.button>
           </motion.div>
         )}
