@@ -8,6 +8,7 @@ import Hero from './sections/Hero';
 import FeaturedListings from './sections/FeaturedListings';
 import RecentAds from "./sections/RecentAds";
 import WhyChooseUs from './sections/WhyChooseUs';
+import DownloadApp from './sections/DownloadApp';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <FeaturedListings />
       <RecentAds />
       <WhyChooseUs />
+      <DownloadApp />
     </>
   );
 }
