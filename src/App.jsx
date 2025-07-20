@@ -9,6 +9,7 @@ import FeaturedListings from './sections/FeaturedListings';
 import RecentAds from "./sections/RecentAds";
 import WhyChooseUs from './sections/WhyChooseUs';
 import DownloadApp from './sections/DownloadApp';
+import Footer from './sections/Footer';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <RecentAds />
       <WhyChooseUs />
       <DownloadApp />
+      <Footer />
     </>
   );
 }
