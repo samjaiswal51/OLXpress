@@ -1,100 +1,103 @@
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiMapPin, FiClock, FiHeart, FiSearch } from 'react-icons/fi';
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiMapPin, FiClock, FiHeart, FiSearch } from "react-icons/fi";
 
-// Mock ads data with more realistic content
+// Dynamically import all images in /assets/recents
+const imageModules = import.meta.glob("/src/assets/recents/*.{jpg,jpeg,png}", {
+  eager: true,
+});
+
+const getImageUrl = (relativePath) => {
+  const match = Object.entries(imageModules).find(([path]) =>
+    path.includes(relativePath)
+  );
+  return match ? match[1].default : "";
+};
+
 const ads = [
   {
     id: 1,
-    title: 'Apple iPad Air 5th Gen - Like New',
+    title: "Apple iPad Air 5th Gen - Like New",
     price: 42000,
     originalPrice: 54900,
-    location: 'Delhi, India',
+    location: "Delhi, India",
     timePosted: new Date(Date.now() - 10 * 60 * 1000),
-    imageUrls: [
-      'src/assets/recents/iPad.jpg',
-    ],
+    imageUrls: ["iPad.jpg"],
     isVerified: true,
     isUrgent: false,
     seller: {
-      name: 'Rahul Kumar',
+      name: "Rahul Kumar",
       rating: 4.8,
-      totalReviews: 156
+      totalReviews: 156,
     },
-    category: 'Electronics',
-    condition: 'Like New',
-    description: '10.9-inch display, A14 Bionic chip, 256GB storage'
+    category: "Electronics",
+    condition: "Like New",
+    description: "10.9-inch display, A14 Bionic chip, 256GB storage",
   },
   {
     id: 2,
-    title: 'Bajaj Avenger Cruise 220cc - 2019',
+    title: "Bajaj Avenger Cruise 220cc - 2019",
     price: 82000,
     originalPrice: 95000,
-    location: 'Mumbai, India',
+    location: "Mumbai, India",
     timePosted: new Date(Date.now() - 2 * 60 * 60 * 1000),
-    imageUrls: [
-      'src/assets/recents/HondaBike.jpg'
-    ],
+    imageUrls: ["HondaBike.jpg"],
     isVerified: false,
     isUrgent: true,
     seller: {
-      name: 'Amit Sharma',
+      name: "Amit Sharma",
       rating: 4.2,
-      totalReviews: 89
+      totalReviews: 89,
     },
-    category: 'Vehicles',
-    condition: 'Good',
-    description: 'Well maintained, single owner, all papers clear'
+    category: "Vehicles",
+    condition: "Good",
+    description: "Well maintained, single owner, all papers clear",
   },
   {
     id: 3,
     title: 'LG Smart TV 43" 4K Ultra HD',
     price: 21000,
     originalPrice: 35000,
-    location: 'Bangalore, India',
+    location: "Bangalore, India",
     timePosted: new Date(Date.now() - 24 * 60 * 60 * 1000),
-    imageUrls: [
-      'src/assets/recents/lgTv.jpg'
-    ],
+    imageUrls: ["lgTv.jpg"],
     isVerified: true,
     isUrgent: false,
     seller: {
-      name: 'Priya Patel',
+      name: "Priya Patel",
       rating: 4.9,
-      totalReviews: 234
+      totalReviews: 234,
     },
-    category: 'Electronics',
-    condition: 'Excellent',
-    description: 'WebOS, HDR support, barely used'
+    category: "Electronics",
+    condition: "Excellent",
+    description: "WebOS, HDR support, barely used",
   },
   {
     id: 4,
-    title: 'iPhone 13 Pro Max 128GB Brand New ',
+    title: "iPhone 13 Pro Max 128GB Brand New ",
     price: 75000,
     originalPrice: 89000,
-    location: 'Pune, India',
+    location: "Pune, India",
     timePosted: new Date(Date.now() - 3 * 60 * 60 * 1000),
-    imageUrls: [
-      'src/assets/recents/Apple13.jpg'
-    ],
+    imageUrls: ["Apple13.jpg"],
     isVerified: true,
     isUrgent: false,
     seller: {
-      name: 'Vikash Singh',
+      name: "Vikash Singh",
       rating: 4.7,
-      totalReviews: 178
+      totalReviews: 178,
     },
-    category: 'Electronics',
-    condition: 'Like New',
-    description: 'Box packed, all accessories included'
-  }
+    category: "Electronics",
+    condition: "Like New",
+    description: "Box packed, all accessories included",
+  },
 ];
 
 const RecentAds = () => {
   const [saved, setSaved] = useState([]);
-  const [sortBy, setSortBy] = useState('newest');
-  const [location, setLocation] = useState('All India');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [sortBy, setSortBy] = useState("newest");
+  const [location, setLocation] = useState("All India");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentImageIndex, setCurrentImageIndex] = useState({});
   const [visibleCount, setVisibleCount] = useState(6);
 
@@ -107,7 +110,7 @@ const RecentAds = () => {
 
   const timeAgo = (time) => {
     const diff = Math.floor((Date.now() - time.getTime()) / 60000);
-    if (diff < 1) return 'Just now';
+    if (diff < 1) return "Just now";
     if (diff < 60) return `${diff} min ago`;
     if (diff < 1440) return `${Math.floor(diff / 60)} hr ago`;
     return `${Math.floor(diff / 1440)} days ago`;
@@ -117,36 +120,37 @@ const RecentAds = () => {
     return Math.round(((original - current) / original) * 100);
   };
 
-  const filteredAds = ads.filter(ad => 
-    selectedCategory === 'All' || ad.category === selectedCategory
+  const filteredAds = ads.filter(
+    (ad) => selectedCategory === "All" || ad.category === selectedCategory
   );
 
   const sortedAds = [...filteredAds].sort((a, b) => {
-    if (sortBy === 'priceLow') return a.price - b.price;
-    if (sortBy === 'priceHigh') return b.price - a.price;
-    if (sortBy === 'rating') return b.seller.rating - a.seller.rating;
+    if (sortBy === "priceLow") return a.price - b.price;
+    if (sortBy === "priceHigh") return b.price - a.price;
+    if (sortBy === "rating") return b.seller.rating - a.seller.rating;
     return b.timePosted - a.timePosted;
   });
 
   const adsToShow = sortedAds.slice(0, visibleCount);
 
   const nextImage = (adId) => {
-    const ad = ads.find(a => a.id === adId);
+    const ad = ads.find((a) => a.id === adId);
     if (!ad) return;
-    
-    setCurrentImageIndex(prev => ({
+
+    setCurrentImageIndex((prev) => ({
       ...prev,
-      [adId]: ((prev[adId] || 0) + 1) % ad.imageUrls.length
+      [adId]: ((prev[adId] || 0) + 1) % ad.imageUrls.length,
     }));
   };
 
   const prevImage = (adId) => {
-    const ad = ads.find(a => a.id === adId);
+    const ad = ads.find((a) => a.id === adId);
     if (!ad) return;
-    
-    setCurrentImageIndex(prev => ({
+
+    setCurrentImageIndex((prev) => ({
       ...prev,
-      [adId]: ((prev[adId] || 0) - 1 + ad.imageUrls.length) % ad.imageUrls.length
+      [adId]:
+        ((prev[adId] || 0) - 1 + ad.imageUrls.length) % ad.imageUrls.length,
     }));
   };
 
@@ -155,29 +159,29 @@ const RecentAds = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const cardVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: 50,
-      scale: 0.9
+      scale: 0.9,
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       scale: 1,
       transition: {
         duration: 0.5,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
-  const categories = ['All', 'Electronics', 'Vehicles', 'Fashion', 'Home'];
+  const categories = ["All", "Electronics", "Vehicles", "Fashion", "Home"];
 
   return (
     <section className="relative py-16 px-4 md:px-10 min-h-screen overflow-hidden">
@@ -210,7 +214,7 @@ const RecentAds = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header Section - Matching FeaturedListings */}
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -243,7 +247,9 @@ const RecentAds = () => {
                 {/* Image Container */}
                 <div className="relative overflow-hidden">
                   <motion.img
-                    src={ad.imageUrls[currentImageIndex[ad.id] || 0]}
+                    src={getImageUrl(
+                      ad.imageUrls[currentImageIndex[ad.id] || 0]
+                    )}
                     alt={ad.title}
                     className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-115"
                     loading="lazy"
@@ -273,7 +279,7 @@ const RecentAds = () => {
                   )}
 
                   {/* Category Badge - Matching FeaturedListings */}
-                  <motion.div 
+                  <motion.div
                     className="absolute top-3 left-3"
                     whileHover={{ scale: 1.1 }}
                   >
@@ -285,7 +291,7 @@ const RecentAds = () => {
                   {/* Additional Badges */}
                   <div className="absolute top-3 right-14 flex flex-col gap-1">
                     {Date.now() - ad.timePosted.getTime() < 60 * 60 * 1000 && (
-                      <motion.span 
+                      <motion.span
                         className="bg-gradient-to-r from-green-400 to-green-600 text-white px-2 py-1 text-xs rounded-full font-semibold shadow-lg"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
@@ -295,7 +301,7 @@ const RecentAds = () => {
                       </motion.span>
                     )}
                     {ad.isVerified && (
-                      <motion.span 
+                      <motion.span
                         className="bg-gradient-to-r from-purple-400 to-purple-600 text-white px-2 py-1 text-xs rounded-full font-semibold shadow-lg"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
@@ -305,7 +311,7 @@ const RecentAds = () => {
                       </motion.span>
                     )}
                     {ad.isUrgent && (
-                      <motion.span 
+                      <motion.span
                         className="bg-gradient-to-r from-red-400 to-red-600 text-white px-2 py-1 text-xs rounded-full font-semibold shadow-lg animate-pulse"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
@@ -327,9 +333,9 @@ const RecentAds = () => {
                   <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-purple-600 transition-colors duration-300">
                     {ad.title}
                   </h3>
-                  
+
                   <div className="mb-4">
-                    <motion.span 
+                    <motion.span
                       className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-600"
                       whileHover={{ scale: 1.05 }}
                     >
@@ -341,7 +347,7 @@ const RecentAds = () => {
                       </span>
                     )}
                   </div>
-                  
+
                   <div className="flex items-center justify-between text-sm text-gray-600">
                     <div className="flex items-center gap-1">
                       <FiMapPin className="text-purple-400" />
@@ -371,14 +377,16 @@ const RecentAds = () => {
                   whileTap={{ scale: 0.9 }}
                 >
                   <motion.div
-                    animate={saved.includes(ad.id) ? { scale: [1, 1.3, 1] } : {}}
+                    animate={
+                      saved.includes(ad.id) ? { scale: [1, 1.3, 1] } : {}
+                    }
                     transition={{ duration: 0.3 }}
                   >
                     <FiHeart
                       className={`text-lg transition-colors ${
-                        saved.includes(ad.id) 
-                          ? 'text-red-400 fill-current' 
-                          : 'text-gray-600 hover:text-red-400'
+                        saved.includes(ad.id)
+                          ? "text-red-400 fill-current"
+                          : "text-gray-600 hover:text-red-400"
                       }`}
                     />
                   </motion.div>
@@ -393,7 +401,7 @@ const RecentAds = () => {
 
         {/* Load More Button - Matching FeaturedListings */}
         {visibleCount < sortedAds.length && (
-          <motion.div 
+          <motion.div
             className="mt-12 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
