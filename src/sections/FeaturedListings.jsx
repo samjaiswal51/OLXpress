@@ -9,7 +9,7 @@ const allListings = [
     price: 92000,
     location: 'Delhi',
     time: '2 hours ago',
-    image: 'https://images.olx.in/thumbnails/294823614-800x600.webp',
+    image: 'src/assets/featured/iphone.jpg',
     category: 'Mobiles',
   },
   {
@@ -18,7 +18,7 @@ const allListings = [
     price: 850000,
     location: 'Mumbai',
     time: '1 day ago',
-    image: 'https://images.olx.in/thumbnails/295648086-800x600.webp',
+    image: 'src/assets/featured/bike.jpg',
     category: 'Cars',
   },
   {
@@ -27,7 +27,7 @@ const allListings = [
     price: 12000,
     location: 'Bangalore',
     time: '3 hours ago',
-    image: 'https://images.olx.in/thumbnails/295515234-800x600.webp',
+    image: 'src/assets/featured/sofa.jpg',
     category: 'Furniture',
   },
   {
@@ -36,7 +36,7 @@ const allListings = [
     price: 34500,
     location: 'Hyderabad',
     time: '4 days ago',
-    image: 'https://images.olx.in/thumbnails/295289214-800x600.webp',
+    image: 'src/assets/featured/smartTv.jpg',
     category: 'Electronics',
   },
 ];

@@ -12,8 +12,7 @@ const ads = [
     location: 'Delhi, India',
     timePosted: new Date(Date.now() - 10 * 60 * 1000),
     imageUrls: [
-      'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400&h=300&fit=crop'
+      'src/assets/recents/iPad.jpg',
     ],
     isVerified: true,
     isUrgent: false,
@@ -34,7 +33,7 @@ const ads = [
     location: 'Mumbai, India',
     timePosted: new Date(Date.now() - 2 * 60 * 60 * 1000),
     imageUrls: [
-      'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop'
+      'src/assets/recents/HondaBike.jpg'
     ],
     isVerified: false,
     isUrgent: true,
@@ -55,7 +54,7 @@ const ads = [
     location: 'Bangalore, India',
     timePosted: new Date(Date.now() - 24 * 60 * 60 * 1000),
     imageUrls: [
-      'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=400&h=300&fit=crop'
+      'src/assets/recents/lgTv.jpg'
     ],
     isVerified: true,
     isUrgent: false,
@@ -70,13 +69,13 @@ const ads = [
   },
   {
     id: 4,
-    title: 'iPhone 13 Pro Max 128GB',
+    title: 'iPhone 13 Pro Max 128GB Brand New ',
     price: 75000,
     originalPrice: 89000,
     location: 'Pune, India',
     timePosted: new Date(Date.now() - 3 * 60 * 60 * 1000),
     imageUrls: [
-      'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=300&fit=crop'
+      'src/assets/recents/Apple13.jpg'
     ],
     isVerified: true,
     isUrgent: false,
