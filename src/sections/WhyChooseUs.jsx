@@ -131,15 +131,35 @@ const iconVariants = {
 
 const WhyChooseUs = () => {
   return (
-    <section className="relative py-16 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-slate-800 dark:to-gray-900 overflow-hidden">
-      {/* Background Decorations */}
-      <div className="absolute inset-0">
-        <div className="absolute top-10 left-10 w-48 h-48 bg-blue-200/20 dark:bg-blue-600/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-56 h-56 bg-purple-200/20 dark:bg-purple-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-100/15 to-purple-100/15 dark:from-blue-900/10 dark:to-purple-900/10 rounded-full blur-3xl"></div>
+    <section className="relative py-16 px-4 md:px-10 min-h-screen overflow-hidden">
+      {/* Simple Purple Background - Matching RecentAds */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900" />
+
+      {/* Animated Background Elements - Matching RecentAds */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-32 h-32 bg-white/5 rounded-full blur-2xl"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              x: [0, 60, -40, 0],
+              y: [0, -60, 40, 0],
+              scale: [1, 1.4, 0.7, 1],
+            }}
+            transition={{
+              duration: 12 + Math.random() * 6,
+              repeat: Infinity,
+              delay: i * 0.7,
+            }}
+          />
+        ))}
       </div>
 
-      <div className="relative max-w-6xl mx-auto">
+      <div className="relative z-10 max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
           className="text-center mb-12"
@@ -149,7 +169,7 @@ const WhyChooseUs = () => {
           transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
         >
           <motion.h2
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 via-blue-600 to-purple-600 dark:from-white dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-4"
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
             initial={{ scale: 0.9 }}
             whileInView={{ scale: 1 }}
             transition={{ duration: 0.5, type: "spring" }}
@@ -166,7 +186,7 @@ const WhyChooseUs = () => {
           </motion.h2>
           
           <motion.p
-            className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
+            className="text-white/80 text-lg max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
@@ -191,11 +211,11 @@ const WhyChooseUs = () => {
               whileHover="hover"
             >
               <motion.div
-                className={`relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/30 dark:border-gray-700/30 overflow-hidden h-full`}
+                className={`relative bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] transition-all duration-500 h-full p-6`}
                 variants={cardHoverVariants}
               >
                 {/* Background Gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.bgColor} dark:bg-gradient-to-br dark:${feature.darkBg} opacity-0 group-hover:opacity-100 transition-all duration-500`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.bgColor} opacity-0 group-hover:opacity-100 transition-all duration-500`}></div>
                 
                 {/* Animated Border */}
                 <motion.div
@@ -223,12 +243,12 @@ const WhyChooseUs = () => {
                 {/* Content */}
                 <div className="relative z-10 text-center">
                   <motion.h3 
-                    className="text-lg font-bold text-gray-800 dark:text-white mb-2 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300"
+                    className="text-lg font-bold text-gray-800 mb-2 group-hover:text-purple-600 transition-colors duration-300"
                     whileHover={{ scale: 1.05 }}
                   >
                     {feature.title}
                   </motion.h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                  <p className="text-sm text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
                     {feature.description}
                   </p>
                 </div>
@@ -238,6 +258,9 @@ const WhyChooseUs = () => {
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
                   initial={false}
                 ></motion.div>
+
+                {/* Hover Glow Effect - Matching RecentAds */}
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-500/10 via-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none rounded-2xl"></div>
               </motion.div>
             </motion.div>
           ))}
@@ -252,7 +275,7 @@ const WhyChooseUs = () => {
           transition={{ duration: 0.8 }}
         >
           <motion.h3 
-            className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-8"
+            className="text-2xl font-bold text-center text-white mb-8"
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
@@ -271,7 +294,7 @@ const WhyChooseUs = () => {
                 whileHover={{ y: -5, scale: 1.02 }}
               >
                 <motion.div 
-                  className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 text-center shadow-md border border-white/30 dark:border-gray-700/30 group-hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+                  className="bg-white rounded-xl p-6 text-center shadow-2xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] transition-all duration-300 relative overflow-hidden"
                   whileHover={{ 
                     boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" 
                   }}
@@ -307,7 +330,7 @@ const WhyChooseUs = () => {
                   </motion.div>
                   
                   <motion.h4 
-                    className="text-2xl font-bold text-gray-800 dark:text-white mb-1"
+                    className="text-2xl font-bold text-gray-800 mb-1"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}
@@ -317,13 +340,13 @@ const WhyChooseUs = () => {
                   </motion.h4>
                   
                   <motion.p 
-                    className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-1"
+                    className="text-sm font-medium text-gray-600 mb-1"
                     whileHover={{ color: "#3b82f6" }}
                   >
                     {stat.label}
                   </motion.p>
                   
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-500">
                     {stat.description}
                   </p>
 
@@ -338,6 +361,9 @@ const WhyChooseUs = () => {
                       repeat: Infinity,
                     }}
                   />
+
+                  {/* Hover Glow Effect - Matching RecentAds */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-purple-500/10 via-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none rounded-xl"></div>
                 </motion.div>
               </motion.div>
             ))}
