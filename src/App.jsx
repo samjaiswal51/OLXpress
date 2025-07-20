@@ -6,13 +6,14 @@ import './App.css'
 import Navbar from "./components/Navbar";
 import Hero from './sections/Hero';
 import FeaturedListings from './sections/FeaturedListings';
-
+import RecentAds from "./sections/RecentAds";
 function App() {
   return (
     <>
       <Navbar />
       <Hero />
-       <FeaturedListings />
+      <FeaturedListings />
+      <RecentAds />
     </>
   );
 }
